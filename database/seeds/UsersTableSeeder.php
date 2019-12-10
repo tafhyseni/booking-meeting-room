@@ -19,18 +19,18 @@ class UsersTableSeeder extends Seeder
         $role_user  = Role::where('name', 'customer')->first();
 
         $admin = new User();
-        $admin->name = 'Willy Arisky';
-        $admin->email = 'admin@test.app';
+        $admin->name = 'John Doe';
+        $admin->email = 'admin@example.com';
         $admin->email_verified_at = Carbon::now();
-        $admin->password = bcrypt('secret');
+        $admin->password = bcrypt('temp1234');
         $admin->save();
         $admin->roles()->attach($role_admin);
 
         $user = new User();
         $user->name = 'Levim Rotem';
-        $user->email = 'customer@test.app';
+        $user->email = 'customer@example.com';
         $user->email_verified_at = Carbon::now();
-        $user->password = bcrypt('secret');
+        $user->password = bcrypt('temp1234');
         $user->save();
         $user->roles()->attach($role_user);
     }
