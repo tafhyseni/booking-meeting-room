@@ -75,6 +75,21 @@ $('#booking-room #day').change(function(e){
 });
 
 /**
+ * Full Day Toggle
+ */
+$('#booking-room #full_day').change(function(e){
+	const full_day = $(this).is(':checked');
+	if(full_day){
+		$('#number-of-days').attr('hidden', false);
+		$('#end-date').attr('hidden', true);
+		$('#day').val(1);
+	}else{
+		$('#number-of-days').attr('hidden', true);
+		$('#end-date').attr('hidden', false);
+	}
+})
+
+/**
  * Checkout booking
  */
 const booking_form = $('#booking-form');
@@ -98,7 +113,7 @@ booking_form.submit(function(e){
 				pushFeedback(field, msg);
 			});
 		} else if($data.status == 'valid') {
-
+			/**
 			// stripe instance
 			const checkout = StripeCheckout.configure({
 			    key: stripeKey,
@@ -131,7 +146,34 @@ booking_form.submit(function(e){
 			    	
 			    }
 			});
+			*/
+		
+			$('.loader').fadeIn();
+		    	$.ajax({
+		    		url: '/booking/store',
+		    		type: 'POST',
+		    		dataType: 'JSON',
+		    		data: booking_form.serialize() + '&room='+ $data.room.id
+		    	})
+		    	.done(function($data) {
+	                if($data.errors) {
+	                    $.each( $data.errors, function( key, msg ) {
+	                    	pushAlert( 'danger', msg, 'booking-alert' );
+	                    });
+	                } else if($data.status == 'success') {
+	                    bookingConfirmed($data.booking);
+	                } else {
+	                    pushAlert( 'danger', 'System error, please try again later or contact us.', 'booking-alert' );
+	                }
+		    	})
+		    	.fail(function($data) {
+		    		pushAlert( 'danger', 'System error, please try again later or contact us.', 'booking-alert' );
+		    	})
+		    	.always(function() {
+					$('.loader').fadeOut();
+		    	});
 
+		    /**
 			// open instance
 			checkout.open({
 		        name: 'BizRoom',
@@ -139,6 +181,7 @@ booking_form.submit(function(e){
 		        email: $data.email,
 		        amount: ($data.room.price * $('#booking-room #day').val())* 100
 		    });
+		    */
 			$('.loader').fadeOut();
 		}
 	})

@@ -146,6 +146,16 @@ class RoomController extends Controller
         $bookings = [];
 
         foreach($room->bookings as $key => $item) {
+            $full_day = false;
+            $start = Carbon::parse($item->start_date)->format('y-m-d H:i');
+            $end = Carbon::parse($item->end_date)->format('y-m-d H:i');
+            
+            if($item->day != 0)
+            {
+                $full_day = true;
+                $start = Carbon::parse($item->start_date)->format('y-m-d');
+                $end = Carbon::parse($item->end_date)->format('y-m-d');
+            }
 
             if($item->end_date > Carbon::now()){
                 $color = '#3a87ad';
@@ -155,9 +165,9 @@ class RoomController extends Controller
 
             $bookings[] = Calendar::event(
                 $item->customer->name,
-                true,
-                Carbon::parse($item->start_date)->format('y-m-d'),
-                Carbon::parse($item->end_date)->format('y-m-d'),
+                $full_day,
+                $start,
+                $end,
                 $key,
                 [
                     'url' => route('admin.booking', $item->id),

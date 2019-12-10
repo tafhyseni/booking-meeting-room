@@ -29,7 +29,7 @@
 							</tr>
 							<tr>
 								<th>Room price / day</th>
-								<td>${{ $data->total / $data->day }}</td>
+								<td>${{ ($data->day == 0) ? ' -' : $data->total / $data->day }}</td>
 							</tr>
 							<tr>
 								<th>Total</th>
@@ -45,7 +45,13 @@
 							</tr>
 							<tr>
 								<th>Day of meeting</th>
-								<td>{{ $data->day }} days</td>
+								<td>
+									@if($data->day == 0)
+									    {{ $data->start_date->diff($data->end_date)->format('%H:%I') . ' mins' }}
+									@else
+									    {{ $data->day }} day{{ $data->day > 1 ? 's' : '' }}
+									@endif
+								</td>
 							</tr>
 							<tr>
 								<th>Note</th>

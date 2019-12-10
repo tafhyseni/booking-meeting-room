@@ -42,13 +42,21 @@
                         </div>
 
                         <div class="row">
-                            <div class="form-group col-md-4">
-                                <label for="date">Date of Meeting</label>
-                                <input id="date" type="date" min='{{ date('Y-m-d') }}' class="form-control" name="date" value="{{ date('Y-m-d') }}" placeholder="Date of Meeting">
+                            <div class="form-group col-md-12">
+                                <label for="full_day">Full day?</label>
+                                <input type="checkbox" name="full_day" id="full_day" value="1">
                             </div>
                             <div class="form-group col-md-4">
+                                <label for="date">Date of Meeting</label>
+                                <input id="date" type="datetime" min='{{ date('Y-m-d') }}' class="form-control" name="date" value="{{ date('Y-m-d H:i') }}" placeholder="Date of Meeting">
+                            </div>
+                            <div class="form-group col-md-4" id="end-date">
+                                <label for="end">End date time</label>
+                                <input id="date" type="datetime" min='{{ date('Y-m-d') }}' class="form-control" name="end_date" value="{{ date('Y-m-d H:i') }}" placeholder="End date time">
+                            </div>
+                            <div class="form-group col-md-4" id="number-of-days" hidden>
                                 <label for="day">Number of Day</label>
-                                <input id="day" type="number" min="1" class="form-control" name="day" value="1" placeholder="Date">
+                                <input id="day" type="number" min="0" class="form-control" name="day" value="0" placeholder="Date">
                             </div>
                             <div class="form-group col-md-12">
                                 <span class="invalid-feedback" id="day-feedback"><strong></strong>

@@ -62,13 +62,19 @@
                     {{ $data->room->name }}<br>
                     <small class="text-muted"><b>Meeting date:</b> {{ $data->start_date->format('Y/m/d') }}</small>
                 </td>
-                <td class="text-center align-middle">${{ $data->total / $data->day }}</td>
-                <td class="text-center align-middle">{{ $data->day }} day{{ $data->day > 1 ? 's' : '' }}</td>
+                <td class="text-center align-middle">${{ ($data->day == 0) ? ' -' : $data->total / $data->day }}</td>
+                <td class="text-center align-middle">
+                    @if($data->day == 0)
+                        {{ $data->start_date->diff($data->end_date)->format('%H:%I') }}
+                    @else
+                        {{ $data->day }} day{{ $data->day > 1 ? 's' : '' }}
+                    @endif
+                </td>
                 <td class="align-middle">{{ $data->total }}</td>
             </tr>
             <tr>
                 <th colspan="3" class="text-right">Paid with</th>
-                <td>Credit Card</td>
+                <td>/<!-- Credit Card --></td>
             </tr>
             <tr>
                 <th colspan="3" class="text-right">Total</th>

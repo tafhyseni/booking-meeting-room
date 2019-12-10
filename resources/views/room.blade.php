@@ -53,7 +53,22 @@
                     {!! nl2br($data->description) !!}
                 </article>
             </div>
+            <div class="row">
+                <div class="col-md-12 mt-5">
+                    <div class="card-header">Availability</div>
+                    <div class="card-body">
+                        {!! $calendar->calendar() !!}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 @endsection
+
+@section('scripts')
+    <script src="{{ asset('js/jquery.2.1.3.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/fullcalendar.min.css') }}"/>
+
+    {!! $calendar->script() !!}
+@stop

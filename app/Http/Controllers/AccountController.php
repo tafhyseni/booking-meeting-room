@@ -118,11 +118,22 @@ class AccountController extends Controller
                 $color = '#800';
             }
 
+            $full_day = false;
+            $start = Carbon::parse($item->start_date)->format('y-m-d H:i');
+            $end = Carbon::parse($item->end_date)->format('y-m-d H:i');
+            
+            if($item->day != 0)
+            {
+                $full_day = true;
+                $start = Carbon::parse($item->start_date)->format('y-m-d');
+                $end = Carbon::parse($item->end_date)->format('y-m-d');
+            }
+
             $bookings[] = Calendar::event(
                 $item->room->name,
-                true,
-                Carbon::parse($item->start_date)->format('y-m-d'),
-                Carbon::parse($item->end_date)->format('y-m-d'),
+                $full_day,
+                $start,
+                $end,
                 $key,
                 [
                     'url' => route('account.invoice', $item->number),

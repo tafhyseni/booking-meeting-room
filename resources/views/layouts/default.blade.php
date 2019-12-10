@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="stripe" content="{{ env('STRIPE_KEY') }}">
     <title>@yield('page.title') • {{ config('app.name') }}</title>
-    <script src="https://checkout.stripe.com/checkout.js" defer></script>
+    <!-- <script src="https://checkout.stripe.com/checkout.js" defer></script> -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
